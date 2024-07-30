@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_player">
+
+    <fragment
+        android:id="@+id/navigation_player"
+        android:name="com.css101.musicplayer.presentation.ui.player.PlayerFragment"
+        android:label="@string/player"
+        tools:layout="@layout/fragment_player" />
+
+    <fragment
+        android:id="@+id/navigation_list"
+        android:name="com.css101.musicplayer.presentation.ui.list.ListFragment"
+        android:label="@string/list"
+        tools:layout="@layout/fragment_list" >
+        <action
+            android:id="@+id/action_list_to_player"
+            app:destination="@id/navigation_player">
+            <argument
+                android:name="audioFile"
+                app:argType="com.css101.musicplayer.domain.models.AudioFile" />
+        </action>
+    </fragment>
+
+</navigation>

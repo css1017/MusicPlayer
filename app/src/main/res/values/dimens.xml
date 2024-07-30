@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="def_margin">16dp</dimen>
+    <dimen name="small_margin">8dp</dimen>
+    <dimen name="img_icon_size">48dp</dimen>
+    <dimen name="img_art_size">256</dimen>
+</resources>
