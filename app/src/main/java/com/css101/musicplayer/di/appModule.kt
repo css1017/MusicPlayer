@@ -6,6 +6,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-    viewModel { PlayerViewModel() }
+    viewModel { PlayerViewModel(get()) }
     viewModel { ListViewModel(get()) }
 }

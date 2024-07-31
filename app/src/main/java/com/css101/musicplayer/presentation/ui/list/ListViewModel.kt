@@ -1,6 +1,5 @@
 package com.css101.musicplayer.presentation.ui.list
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,9 +17,8 @@ class ListViewModel(private val getMusicListUseCase: GetMusicListUseCase) : View
 
     fun getMusicList() {
         if (_musicList.value == null) {
-            viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch(Dispatchers.Default) {
                 val data = getMusicListUseCase.execute()
-                Log.e("aaaa", data.toString())
                 withContext(Dispatchers.Main) {
                     _musicList.value = data
                 }
