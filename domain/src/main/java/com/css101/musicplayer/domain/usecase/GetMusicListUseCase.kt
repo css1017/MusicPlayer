@@ -6,6 +6,5 @@ import com.css101.musicplayer.domain.repository.MusicRepo
 class GetMusicListUseCase(private val musicRepo: MusicRepo) {
     suspend fun execute(): List<AudioFile> {
         return musicRepo.getMusicList()
-
     }
 }
