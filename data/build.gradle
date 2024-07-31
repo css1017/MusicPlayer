@@ -32,7 +32,6 @@ android {
 dependencies {
 
     implementation project(path: ':domain')
-    
     implementation libs.kotlinx.coroutines.core
     implementation libs.kotlinx.coroutines.android
 

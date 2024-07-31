@@ -9,7 +9,8 @@ import com.css101.musicplayer.domain.repository.MusicRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class MusicRepoImpl(private val context: Context) : MusicRepo {
+class MusicRepoImpl(private val context: Context) :
+    MusicRepo {
 
     override suspend fun getMusicList(): List<AudioFile> = withContext(Dispatchers.IO) {
         val audioList = mutableListOf<AudioFile>()
@@ -47,14 +48,22 @@ class MusicRepoImpl(private val context: Context) : MusicRepo {
                 val albumId = it.getLong(albumIdColumn)
                 val fileUri = it.getString(dataColumn)
                 val coverUri = getAlbumArtUri(albumId)
-                audioList.add(AudioFile(title, artist, duration, coverUri, fileUri))
+                audioList.add(
+                    AudioFile(
+                        title,
+                        artist,
+                        duration,
+                        coverUri,
+                        fileUri
+                    )
+                )
             }
         }
 
         audioList
     }
 
-    private fun getAlbumArtUri(albumId: Long): String? {
+    private fun getAlbumArtUri(albumId: Long): String {
         val sArtworkUri = Uri.parse("content://media/external/audio/albumart")
         return Uri.withAppendedPath(sArtworkUri, albumId.toString()).toString()
     }
