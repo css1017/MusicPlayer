@@ -3,25 +3,73 @@ package com.css101.musicplayer.presentation.ui.player
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
+import androidx.media3.exoplayer.ExoPlayer
 import com.css101.musicplayer.domain.models.AudioFile
-import com.css101.musicplayer.domain.usecase.GetMusicListUseCase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
-class PlayerViewModel(private val getMusicListUseCase: GetMusicListUseCase) : ViewModel() {
+class PlayerViewModel(private val player: ExoPlayer) : ViewModel() {
 
     private val _audioFile = MutableLiveData<AudioFile>()
     val audioFile: LiveData<AudioFile> = _audioFile
 
-    private val _list = MutableLiveData<List<AudioFile>>()
-    val list: LiveData<List<AudioFile>> = _list
-
-    fun getMusicList() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val list = getMusicListUseCase.execute()
-            _list.postValue(list)
+    fun saveAudio(audio: AudioFile?) = audio?.let {
+        if (_audioFile.value != it) {
+            _audioFile.value = it
+            setMediaItem(it)
+            playAudio()
         }
     }
 
+    private fun setMediaItem(audio: AudioFile) {
+        val mediaItem = MediaItem.Builder()
+            .setUri(audio.fileUri)
+            .build()
+        player.setMediaItem(mediaItem)
+    }
+
+    private var _isPlaying = MutableLiveData(false)
+    val isPlaying: LiveData<Boolean> = _isPlaying
+
+    fun playPause() {
+        when (isPlaying.value) {
+            false -> playAudio()
+            true -> pausePlayback()
+            else -> {}
+        }
+    }
+
+    private fun addListener() {
+        player.addListener(object : Player.Listener {
+            override fun onIsPlayingChanged(isPlaying: Boolean) {
+                _isPlaying.postValue(isPlaying)
+            }
+
+            override fun onPlaybackStateChanged(state: Int) {
+                if (state == Player.STATE_ENDED) {
+                    audioFile.value?.let {
+                        setMediaItem(audioFile.value!!)
+                        pausePlayback()
+                    }
+                }
+            }
+        })
+    }
+
+    private fun playAudio() {
+        player.prepare()
+        player.playWhenReady = true
+        _isPlaying.value = true
+        addListener()
+    }
+
+    private fun pausePlayback() {
+        player.playWhenReady = false
+        _isPlaying.value = false
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        player.release()
+    }
 }

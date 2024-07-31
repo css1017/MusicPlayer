@@ -10,6 +10,9 @@
         android:name="com.css101.musicplayer.presentation.ui.player.PlayerFragment"
         android:label="@string/player"
         tools:layout="@layout/fragment_player">
+        <action
+            android:id="@+id/action_player_to_list"
+            app:destination="@id/navigation_list"/>
         <argument
             android:name="audioFile"
             app:nullable="true"

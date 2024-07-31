@@ -5,4 +5,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="list">List</string>
     <string name="player">Player</string>
+    <string name="pick_a_song_from_song_list">Pick a song from song list</string>
+    <string name="coverart">coverart</string>
+    <string name="play_pause">play/pause</string>
 </resources>
