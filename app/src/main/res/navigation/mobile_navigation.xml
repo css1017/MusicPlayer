@@ -10,28 +10,28 @@
         android:name="com.css101.musicplayer.presentation.ui.player.PlayerFragment"
         android:label="@string/player"
         tools:layout="@layout/fragment_player">
+        <argument
+            android:name="audioFile"
+            android:defaultValue="@null"
+            app:argType="com.css101.musicplayer.domain.models.AudioFile"
+            app:nullable="true" />
         <action
             android:id="@+id/action_player_to_list"
             app:destination="@id/navigation_list"/>
-        <argument
-            android:name="audioFile"
-            app:nullable="true"
-            android:defaultValue="@null"
-            app:argType="com.css101.musicplayer.domain.models.AudioFile" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_list"
         android:name="com.css101.musicplayer.presentation.ui.list.ListFragment"
         android:label="@string/list"
-        tools:layout="@layout/fragment_list" >
+        tools:layout="@layout/fragment_list">
         <action
             android:id="@+id/action_list_to_player"
-            app:destination="@id/navigation_player">
+            app:destination="@id/navigation_player" >
             <argument
                 android:name="audioFile"
-                app:nullable="true"
-                app:argType="com.css101.musicplayer.domain.models.AudioFile" />
+                app:argType="com.css101.musicplayer.domain.models.AudioFile"
+                app:nullable="true" />
         </action>
     </fragment>
 

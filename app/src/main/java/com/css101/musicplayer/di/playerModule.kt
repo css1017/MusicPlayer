@@ -6,6 +6,5 @@ import org.koin.dsl.module
 
 val playerModule = module {
 
-    scope(named("myScope")) {
-        scoped { ExoPlayer.Builder(get()).build() }
-    }}
+  single { ExoPlayer.Builder(get()).build() }
+}
