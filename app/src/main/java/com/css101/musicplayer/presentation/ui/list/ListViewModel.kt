@@ -10,7 +10,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ListViewModel(private val getMusicListUseCase: GetMusicListUseCase) : ViewModel() {
+class ListViewModel(
+    private val getMusicListUseCase: GetMusicListUseCase,
+) : ViewModel() {
 
     private val _musicList = MutableLiveData<List<AudioFile>>()
     val musicList: LiveData<List<AudioFile>> = _musicList
@@ -25,4 +27,5 @@ class ListViewModel(private val getMusicListUseCase: GetMusicListUseCase) : View
             }
         }
     }
+
 }

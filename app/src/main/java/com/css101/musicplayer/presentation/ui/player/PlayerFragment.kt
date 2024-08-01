@@ -2,8 +2,6 @@ package com.css101.musicplayer.presentation.ui.player
 
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.css101.musicplayer.R
@@ -16,13 +14,15 @@ class PlayerFragment : BaseFragment<FragmentPlayerBinding>(FragmentPlayerBinding
 
     private val args: PlayerFragmentArgs by navArgs()
     private val vm: PlayerViewModel by viewModel()
-    private lateinit var navController: NavController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navController = findNavController()
         vm.saveAudio(args.audioFile)
         showEmpty()
+        setObservers()
+    }
+
+    private fun setObservers(){
         vm.audioFile.observe(viewLifecycleOwner) {
             showPlayer()
             setAudio(it)
@@ -33,7 +33,7 @@ class PlayerFragment : BaseFragment<FragmentPlayerBinding>(FragmentPlayerBinding
     }
 
     private fun setControls(isPlaying: Boolean) = with(binding) {
-        binding.btnPlayPause.setOnClickListener {
+        btnPlayPause.setOnClickListener {
             vm.playPause()
         }
         when (isPlaying) {
@@ -53,19 +53,18 @@ class PlayerFragment : BaseFragment<FragmentPlayerBinding>(FragmentPlayerBinding
     }
 
     private fun showEmpty() = with(binding) {
-        tvEmpty.setOnClickListener {
+        btnPickSong.setOnClickListener {
             val action = PlayerFragmentDirections.actionPlayerToList()
             navController.navigate(action)
-
         }
-        tvEmpty.visibility = View.VISIBLE
+        llEmpty.visibility = View.VISIBLE
         ivCover.visibility = View.GONE
         llTitle.visibility = View.GONE
         btnPlayPause.visibility = View.GONE
     }
 
     private fun showPlayer() = with(binding) {
-        tvEmpty.visibility = View.GONE
+        llEmpty.visibility = View.GONE
         ivCover.visibility = View.VISIBLE
         llTitle.visibility = View.VISIBLE
         btnPlayPause.visibility = View.VISIBLE

@@ -6,9 +6,7 @@ import com.css101.musicplayer.R
 import com.css101.musicplayer.databinding.ItemListBinding
 import com.css101.musicplayer.domain.models.AudioFile
 
-
-class ListViewHolder(private val binding: ItemListBinding) :
-    RecyclerView.ViewHolder(binding.root) {
+class ListViewHolder(private val binding: ItemListBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: AudioFile): Unit = with(binding) {
         val ctx = tvTitle.context
         tvTitle.text = item.title
@@ -20,5 +18,4 @@ class ListViewHolder(private val binding: ItemListBinding) :
             .error(R.drawable.img_no_album_small)
             .into(ivIcon)
     }
-
 }

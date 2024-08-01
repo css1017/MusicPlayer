@@ -7,8 +7,8 @@ import com.css101.musicplayer.databinding.ItemListBinding
 import com.css101.musicplayer.domain.models.AudioFile
 
 
-class ListAdapter(
-    private val items: List<AudioFile>,
+class ListSongAdapter(
+    private var items: List<AudioFile>,
     private var onItemClick: ((AudioFile) -> Unit),
 ) : RecyclerView.Adapter<ListViewHolder>() {
 
@@ -22,9 +22,8 @@ class ListAdapter(
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val item = items[position]
-            holder.bind(item)
-            holder.itemView.setOnClickListener {
-                onItemClick(item)
-            }
+        holder.bind(item)
+        holder.itemView.setOnClickListener { onItemClick(item) }
     }
+
 }
