@@ -12,23 +12,24 @@ import androidx.core.content.ContextCompat
 
 class PermissionsHelper(activityResultCaller: ActivityResultCaller) : ActivityResultCallerHelper(activityResultCaller) {
 
+    private var permissionReceived = {}
+    private var permissionNotReceived = {}
+
     private val requestPermissionLauncher =
         caller?.registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { granted ->
             if (granted) {
-                doIfGranted()
+                permissionReceived()
             } else {
-                doIfNotGranted()
+                permissionNotReceived()
             }
         }
 
-    private var doIfGranted = {}
-    private var doIfNotGranted: () -> Unit = {}
 
-    fun request(doIfGranted: () -> Unit, doIfNotGranted: () -> Unit) {
-        this.doIfGranted = doIfGranted
-        this.doIfNotGranted = doIfNotGranted
+    fun request(whenReceived: () -> Unit, whenNotReceived: () -> Unit) {
+        this.permissionReceived = whenReceived
+        this.permissionNotReceived = whenNotReceived
 
         val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             android.Manifest.permission.READ_MEDIA_AUDIO
@@ -37,7 +38,7 @@ class PermissionsHelper(activityResultCaller: ActivityResultCaller) : ActivityRe
         }
 
         when (permission.isGranted()) {
-            true -> doIfGranted.invoke()
+            true -> whenReceived.invoke()
             false -> requestPermissionLauncher?.launch(permission)
             null -> Unit
         }

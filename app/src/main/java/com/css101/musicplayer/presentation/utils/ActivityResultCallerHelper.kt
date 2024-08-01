@@ -13,12 +13,11 @@ abstract class ActivityResultCallerHelper(activityResultCaller: ActivityResultCa
     protected val caller: ActivityResultCaller?
         get() = weakActivityResultCaller.get()
 
-    protected val context: Context?
-        get() = when (caller) {
+    protected val context: Context? = when (caller) {
             is Fragment -> (caller as? Fragment)?.context
             is ContextWrapper -> (caller as? ContextWrapper)?.baseContext
             null -> null
-            else -> throw Exception("Need to provide context for $caller")
+            else -> throw Exception("Need context for $caller")
         }
 
 }
