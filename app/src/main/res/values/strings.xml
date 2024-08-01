@@ -12,7 +12,7 @@
     <string name="there_are_no_songs_on_device">There are no songs on device.</string>
     <string name="please_give_this_app_permission_to_access_nyour_media">Please give this app permission to access\nyour media.</string>
     <string name="give_access">Give access</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
     <string name="go_to_settings">Go to settings</string>
     <string name="pick">Pick</string>
 </resources>

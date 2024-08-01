@@ -2,6 +2,7 @@ package com.css101.musicplayer.presentation.ui.list
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.css101.musicplayer.presentation.base.BaseFragment
 import com.css101.musicplayer.databinding.FragmentListBinding
@@ -32,7 +33,10 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
     private fun setAdapter(musicList: List<AudioFile>) = with(binding) {
         val adapter = ListSongAdapter(musicList) {
             val action = ListFragmentDirections.actionListToPlayer(it)
-            navController.navigate(action)
+            val navOptions = NavOptions.Builder()
+                .setPopUpTo(navController.graph.startDestinationId, true)
+                .build()
+            navController.navigate(action, navOptions)
         }
         rvList.adapter = adapter
         adapter.notifyItemRangeChanged(0, adapter.itemCount)

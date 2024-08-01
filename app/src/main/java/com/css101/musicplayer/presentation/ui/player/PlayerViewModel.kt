@@ -71,4 +71,8 @@ class PlayerViewModel(private val player: ExoPlayer) : ViewModel() {
         _isPlaying.value = false
     }
 
+    override fun onCleared() {
+//        player.release()
+        super.onCleared()
+    }
 }
