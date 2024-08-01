@@ -75,7 +75,7 @@ class ListFragment : BaseFragment<FragmentListBinding>(FragmentListBinding::infl
 
     private fun requestPermission() {
         permissionsHelper.request(
-            doIfGranted = { vm.getMusicList() },
-            doIfNotGranted = { showNoPermission() })
+            whenReceived = { vm.getMusicList() },
+            whenNotReceived = { showNoPermission() })
     }
 }

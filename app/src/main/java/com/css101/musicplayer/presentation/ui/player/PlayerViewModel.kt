@@ -58,7 +58,7 @@ class PlayerViewModel(private val player: ExoPlayer) : ViewModel() {
                 }
             }
         })
-    } //todo remove listener on close
+    }
 
     private fun playAudio() {
         player.prepare()
@@ -71,8 +71,4 @@ class PlayerViewModel(private val player: ExoPlayer) : ViewModel() {
         _isPlaying.value = false
     }
 
-    override fun onCleared() {
-//        player.release()
-        super.onCleared()
-    }
 }
