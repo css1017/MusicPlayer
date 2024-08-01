@@ -6,11 +6,16 @@ import android.net.Uri
 import android.provider.MediaStore
 import com.css101.musicplayer.domain.models.AudioFile
 import com.css101.musicplayer.domain.repository.MusicRepo
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-class MusicRepoImpl(private val context: Context) :
-    MusicRepo {
+class MusicRepoImpl(private val context: Context) : MusicRepo {
 
     override suspend fun getMusicList(): List<AudioFile>{
+        return getMusicFromDevice()
+    }
+
+    private suspend fun getMusicFromDevice():List<AudioFile>{
         val audioList = mutableListOf<AudioFile>()
 
         val projection = arrayOf(
@@ -40,15 +45,17 @@ class MusicRepoImpl(private val context: Context) :
             val dataColumn = it.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
 
             while (it.moveToNext()) {
-                audioList.add(
-                    AudioFile(
-                        it.getString(titleColumn),
-                        it.getString(artistColumn),
-                        it.getLong(durationColumn),
-                        getAlbumArtUri(it.getLong(albumIdColumn)),
-                        it.getString(dataColumn)
+                withContext(Dispatchers.Default){
+                    audioList.add(
+                        AudioFile(
+                            it.getString(titleColumn),
+                            it.getString(artistColumn),
+                            it.getLong(durationColumn),
+                            getAlbumArtUri(it.getLong(albumIdColumn)),
+                            it.getString(dataColumn)
+                        )
                     )
-                )
+                }
             }
         }
 

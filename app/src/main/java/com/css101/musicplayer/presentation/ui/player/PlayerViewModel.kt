@@ -13,6 +13,10 @@ class PlayerViewModel(private val player: ExoPlayer) : ViewModel() {
     private val _audioFile = MutableLiveData<AudioFile>()
     val audioFile: LiveData<AudioFile> = _audioFile
 
+    init {
+        addListener()
+    }
+
     fun saveAudio(audio: AudioFile?) = audio?.let {
         if (_audioFile.value != it) {
             _audioFile.value = it
@@ -54,13 +58,12 @@ class PlayerViewModel(private val player: ExoPlayer) : ViewModel() {
                 }
             }
         })
-    }
+    } //todo remove listener on close
 
     private fun playAudio() {
         player.prepare()
         player.playWhenReady = true
         _isPlaying.value = true
-        addListener()
     }
 
     private fun pausePlayback() {
@@ -68,8 +71,4 @@ class PlayerViewModel(private val player: ExoPlayer) : ViewModel() {
         _isPlaying.value = false
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        player.release()
-    }
 }

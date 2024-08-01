@@ -54,16 +54,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llTitle" />
 
-    <TextView
-        android:id="@+id/tvEmpty"
+    <LinearLayout
+        android:id="@+id/llEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawablePadding="@dimen/def_margin"
-        android:text="@string/pick_a_song_from_song_list"
-        app:drawableTopCompat="@drawable/ic_no_song_selected"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="gone" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvEmpty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/def_margin"
+            android:text="@string/pick_a_song_from_song_list"
+            app:drawableTopCompat="@drawable/ic_no_song_selected" />
+
+        <Button
+            android:id="@+id/btnPickSong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/def_margin"
+            android:text="@string/pick" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
